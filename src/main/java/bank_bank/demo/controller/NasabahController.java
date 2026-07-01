@@ -4,7 +4,6 @@ import bank_bank.demo.dto.NasabahDTO;
 import bank_bank.demo.dto.response.ApiResponse;
 import bank_bank.demo.model.Nasabah;
 import bank_bank.demo.service.NasabahService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +18,7 @@ public class NasabahController {
     private NasabahService nasabahService;
 
     @PostMapping
-    public ResponseEntity<ApiResponse<Nasabah>> createNasabah(@Valid @RequestBody NasabahDTO request) {
+    public ResponseEntity<ApiResponse<Nasabah>> createNasabah(@RequestBody NasabahDTO request) {
         Nasabah response = nasabahService.createNasabah(request);
         return ResponseEntity.ok(ApiResponse.success("Nasabah berhasil dibuat", response));
     }
@@ -35,9 +34,14 @@ public class NasabahController {
         Nasabah response = nasabahService.findById(id);
         return ResponseEntity.ok(ApiResponse.success("Nasabah berhasil Didapatkan", response));
     }
+    @GetMapping("/ktp/{noKtp}")
+    public ResponseEntity<ApiResponse<Nasabah>> getNasabahByNoKtp(@PathVariable String noKtp) {
+        Nasabah response = nasabahService.findByNoKtp(noKtp);
+        return ResponseEntity.ok(ApiResponse.success("Nasabah berhasil Didapatkan", response));
+    }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<Nasabah>> updateNasabah(@PathVariable Integer id,NasabahDTO request) {
+    public ResponseEntity<ApiResponse<Nasabah>> updateNasabah(@PathVariable Integer id, @RequestBody NasabahDTO request) {
         Nasabah response = nasabahService.updateNasabah(id,request);
         return ResponseEntity.ok(ApiResponse.success("Nasabah berhasil Diubah", response));
     }

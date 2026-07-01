@@ -1,16 +1,13 @@
 package bank_bank.demo.dto;
 
-import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDate;
 
 public class NasabahDTO {
     private String name;
-    @NotBlank(message = "full name is required")
     private String fullName;
     private String address;
     private LocalDate birthDate;
-    @NotBlank(message = "nik is required")
     private String noKtp;
     private String noTelp;
 
