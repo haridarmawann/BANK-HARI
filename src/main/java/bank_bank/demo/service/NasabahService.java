@@ -16,6 +16,7 @@ public class NasabahService {
     private NasabahRepository nasabahRepository;
 
     public Nasabah createNasabah(NasabahDTO request){
+        validate(request);
         Boolean checkNasabah = nasabahRepository.existsByNoKtpAndIsDeletedFalse(request.getNoKtp());
         if (checkNasabah == true){
             throw new IllegalArgumentException("Data Nasabah Sudah Ada No KTP: " + request.getNoKtp());
@@ -41,6 +42,7 @@ public class NasabahService {
         Nasabah nasabah = findById(id);
         nasabah.setAddress(request.getAddress()!= null ? request.getAddress()  :nasabah.getAddress());
         nasabah.setBirthDate(request.getBirthDate() != null ? request.getBirthDate() : nasabah.getBirthDate());
+        nasabah.setNoTelp(request.getNoTelp() != null ? request.getNoTelp() : nasabah.getNoTelp());
         nasabah.setUpdatedAt(LocalDateTime.now());
 
         return nasabahRepository.save(nasabah);
@@ -56,5 +58,14 @@ public class NasabahService {
     public Nasabah findByNoKtp(String nik){
         return nasabahRepository.findNasabahByNoKtpAndIsDeletedFalse(nik)
                 .orElseThrow(() -> new IllegalArgumentException("Nasabah tidak ditemukan"));
+    }
+
+    private void validate(NasabahDTO request){
+        if (request.getFullName() == null){
+            throw new IllegalArgumentException("Nama Harus Diisi");
+        }
+        if (request.getNoKtp() == null){
+            throw new IllegalArgumentException("No KTP Harus Diisi");
+        }
     }
 }
