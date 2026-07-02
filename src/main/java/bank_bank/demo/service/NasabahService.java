@@ -17,6 +17,7 @@ public class NasabahService {
 
     public Nasabah createNasabah(NasabahDTO request){
         validate(request);
+        validatePhone(request.getPhone());
         Boolean checkNasabah = nasabahRepository.existsByNikAndIsDeletedFalse(request.getNik());
         if (checkNasabah == true){
             throw new IllegalArgumentException("Data Nasabah Sudah Ada No KTP: " + request.getNik());
@@ -40,6 +41,8 @@ public class NasabahService {
 
     public Nasabah updateNasabah(Integer id,NasabahDTO request){
         Nasabah nasabah = findById(id);
+
+        validatePhone(request.getPhone());
 
         nasabah.setBirthPlace(request.getBirthPlace() != null ? request.getBirthPlace() : nasabah.getBirthPlace());
         nasabah.setAddress(request.getAddress() != null ? request.getAddress() : nasabah.getAddress());
@@ -71,6 +74,18 @@ public class NasabahService {
         }
         if (request.getNik().length() != 16){
             throw new IllegalArgumentException("No KTP Harus 16 Karakter");
+        }
+    }
+
+
+    private void validatePhone(String phone){
+        if (phone != null) {
+            if (phone.length() < 10 || phone.length() > 15) {
+                throw new IllegalArgumentException("Nomor Handphone Harus 10-15 Digit");
+            }
+            if (!phone.matches("\\d+")) {
+                throw new IllegalArgumentException("Nomor Handphone Harus Berupa Angka");
+            }
         }
     }
 }
