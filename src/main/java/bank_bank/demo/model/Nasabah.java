@@ -15,13 +15,17 @@ public class Nasabah {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(length = 50)
     private String name;
+    @Column(length = 100)
     private String fullName;
     private String address;
     private LocalDate birthDate;
+    @Column(length = 100)
     private String birthPlace;
-    @Column(unique = true)
+    @Column(unique = true, length = 16)
     private String nik;
+    @Column(length = 15)
     private String phone;
     private Boolean isDeleted;
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
