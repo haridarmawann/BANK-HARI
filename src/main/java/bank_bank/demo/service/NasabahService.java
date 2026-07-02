@@ -30,7 +30,7 @@ public class NasabahService {
        return nasabahRepository.save(nasabah);
     }
 
-    public Nasabah findById(Integer id){
+    public Nasabah findById(Long id){
         return nasabahRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Nasabah tidak ditemukan"));
     }
@@ -39,7 +39,7 @@ public class NasabahService {
         return nasabahRepository.findNasabahByIsDeletedFalse();
     }
 
-    public Nasabah updateNasabah(Integer id,NasabahDTO request){
+    public Nasabah updateNasabah(Long id,NasabahDTO request){
         Nasabah nasabah = findById(id);
 
         validatePhone(request.getPhone());
@@ -53,7 +53,7 @@ public class NasabahService {
         return nasabahRepository.save(nasabah);
     }
 
-    public void deleteNasabah(Integer id){
+    public void deleteNasabah(Long id){
         Nasabah nasabah = findById(id);
         nasabah.setDeleted(true);
         nasabah.setUpdatedAt(LocalDateTime.now());

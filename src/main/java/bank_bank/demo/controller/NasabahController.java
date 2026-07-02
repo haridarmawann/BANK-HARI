@@ -30,7 +30,7 @@ public class NasabahController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<Nasabah>> getNasabahById(@PathVariable Integer id) {
+    public ResponseEntity<ApiResponse<Nasabah>> getNasabahById(@PathVariable Long id) {
         Nasabah response = nasabahService.findById(id);
         return ResponseEntity.ok(ApiResponse.success("Nasabah berhasil Didapatkan", response));
     }
@@ -41,13 +41,13 @@ public class NasabahController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<Nasabah>> updateNasabah(@PathVariable Integer id, @RequestBody NasabahDTO request) {
+    public ResponseEntity<ApiResponse<Nasabah>> updateNasabah(@PathVariable Long id, @RequestBody NasabahDTO request) {
         Nasabah response = nasabahService.updateNasabah(id,request);
         return ResponseEntity.ok(ApiResponse.success("Nasabah berhasil Diubah", response));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<Nasabah>> deleteNasabah(@PathVariable Integer id) {
+    public ResponseEntity<ApiResponse<Nasabah>> deleteNasabah(@PathVariable Long id) {
         nasabahService.deleteNasabah(id);
         return ResponseEntity.ok(ApiResponse.success("Nasabah berhasil Dihapus", null));
     }
