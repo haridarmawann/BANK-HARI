@@ -2,6 +2,7 @@ package bank_bank.demo.model;
 
 
 import bank_bank.demo.dto.NasabahDTO;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 
@@ -23,7 +24,9 @@ public class Nasabah {
     private String nik;
     private String phone;
     private Boolean isDeleted;
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updatedAt;
 
     public Long getId() {
