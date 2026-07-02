@@ -105,4 +105,43 @@ class NasabahServiceTest {
         assertEquals("No KTP Harus Diisi", exception.getMessage());
         verify(nasabahRepository, never()).save(any());
     }
+
+    @Test
+    void createNasabah_phoneTooShort_throwsException() {
+        validRequest.setPhone("08123");
+
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> nasabahService.createNasabah(validRequest)
+        );
+
+        assertEquals("Nomor Handphone Harus 10-15 Digit", exception.getMessage());
+        verify(nasabahRepository, never()).save(any());
+    }
+
+    @Test
+    void createNasabah_phoneTooLong_throwsException() {
+        validRequest.setPhone("0812345678901234");
+
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> nasabahService.createNasabah(validRequest)
+        );
+
+        assertEquals("Nomor Handphone Harus 10-15 Digit", exception.getMessage());
+        verify(nasabahRepository, never()).save(any());
+    }
+
+    @Test
+    void createNasabah_phoneNotNumeric_throwsException() {
+        validRequest.setPhone("08123abcdef");
+
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> nasabahService.createNasabah(validRequest)
+        );
+
+        assertEquals("Nomor Handphone Harus Berupa Angka", exception.getMessage());
+        verify(nasabahRepository, never()).save(any());
+    }
 }
