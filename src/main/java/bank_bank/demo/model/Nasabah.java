@@ -19,8 +19,9 @@ public class Nasabah {
     private String fullName;
     private String address;
     private LocalDate birthDate;
-    private String noKtp;
-    private String noTelp;
+    private String birthPlace;
+    private String nik;
+    private String phone;
     private Boolean isDeleted;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -66,20 +67,28 @@ public class Nasabah {
         this.birthDate = birthDate;
     }
 
-    public String getNoKtp() {
-        return noKtp;
+    public String getBirthPlace() {
+        return birthPlace;
     }
 
-    public void setNoKtp(String noKtp) {
-        this.noKtp = noKtp;
+    public void setBirthPlace(String birthPlace) {
+        this.birthPlace = birthPlace;
     }
 
-    public String getNoTelp() {
-        return noTelp;
+    public String getNik() {
+        return nik;
     }
 
-    public void setNoTelp(String noTelp) {
-        this.noTelp = noTelp;
+    public void setNik(String nik) {
+        this.nik = nik;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public Boolean getDeleted() {
@@ -111,8 +120,9 @@ public class Nasabah {
         this.setFullName(request.getFullName() != null ? request.getFullName() : this.getFullName());
         this.setAddress(request.getAddress() != null ? request.getAddress() : this.getAddress());
         this.setBirthDate(request.getBirthDate() != null ? request.getBirthDate() : this.getBirthDate());
-        this.setNoKtp(request.getNoKtp() != null ? request.getNoKtp() : this.getNoKtp());
-        this.setNoTelp(request.getNoTelp() != null ? request.getNoTelp() : this.getNoTelp());
+        this.setBirthPlace(request.getBirthPlace()  != null ? request.getBirthPlace() : this.getBirthPlace());
+        this.setNik(request.getNik() != null ? request.getNik() : this.getNik());
+        this.setPhone(request.getPhone() != null ? request.getPhone() : this.getPhone());
         this.setDeleted(false);
 
         return this;

@@ -17,9 +17,9 @@ public class NasabahService {
 
     public Nasabah createNasabah(NasabahDTO request){
         validate(request);
-        Boolean checkNasabah = nasabahRepository.existsByNoKtpAndIsDeletedFalse(request.getNoKtp());
+        Boolean checkNasabah = nasabahRepository.existsByNikAndIsDeletedFalse(request.getNik());
         if (checkNasabah == true){
-            throw new IllegalArgumentException("Data Nasabah Sudah Ada No KTP: " + request.getNoKtp());
+            throw new IllegalArgumentException("Data Nasabah Sudah Ada No KTP: " + request.getNik());
         }
         Nasabah nasabah = new Nasabah().mappingFrom(request);
         nasabah.setDeleted(false);
@@ -39,10 +39,7 @@ public class NasabahService {
     }
 
     public Nasabah updateNasabah(Integer id,NasabahDTO request){
-        Nasabah nasabah = findById(id);
-        nasabah.setAddress(request.getAddress()!= null ? request.getAddress()  :nasabah.getAddress());
-        nasabah.setBirthDate(request.getBirthDate() != null ? request.getBirthDate() : nasabah.getBirthDate());
-        nasabah.setNoTelp(request.getNoTelp() != null ? request.getNoTelp() : nasabah.getNoTelp());
+        Nasabah nasabah = findById(id).mappingFrom(request);
         nasabah.setUpdatedAt(LocalDateTime.now());
 
         return nasabahRepository.save(nasabah);
@@ -56,7 +53,7 @@ public class NasabahService {
         nasabahRepository.save(nasabah);
     }
     public Nasabah findByNoKtp(String nik){
-        return nasabahRepository.findNasabahByNoKtpAndIsDeletedFalse(nik)
+        return nasabahRepository.findNasabahByNikAndIsDeletedFalse(nik)
                 .orElseThrow(() -> new IllegalArgumentException("Nasabah tidak ditemukan"));
     }
 
@@ -64,8 +61,11 @@ public class NasabahService {
         if (request.getFullName() == null){
             throw new IllegalArgumentException("Nama Harus Diisi");
         }
-        if (request.getNoKtp() == null){
+        if (request.getNik() == null){
             throw new IllegalArgumentException("No KTP Harus Diisi");
+        }
+        if (request.getNik().length() != 16){
+            throw new IllegalArgumentException("No KTP Harus 16 Karakter");
         }
     }
 }

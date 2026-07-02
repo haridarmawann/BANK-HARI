@@ -8,8 +8,9 @@ public class NasabahDTO {
     private String fullName;
     private String address;
     private LocalDate birthDate;
-    private String noKtp;
-    private String noTelp;
+    private String birthPlace;
+    private String nik;
+    private String phone;
 
     public String getName() {
         return name;
@@ -43,19 +44,27 @@ public class NasabahDTO {
         this.birthDate = birthDate;
     }
 
-    public String getNoKtp() {
-        return noKtp;
+    public String getBirthPlace() {
+        return birthPlace;
     }
 
-    public void setNoKtp(String noKtp) {
-        this.noKtp = noKtp;
+    public void setBirthPlace(String birthPlace) {
+        this.birthPlace = birthPlace;
     }
 
-    public String getNoTelp() {
-        return noTelp;
+    public String getNik() {
+        return nik;
     }
 
-    public void setNoTelp(String noTelp) {
-        this.noTelp = noTelp;
+    public void setNik(String nik) {
+        this.nik = nik;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

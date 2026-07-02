@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface NasabahRepository extends JpaRepository<Nasabah,Integer> {
 
     List<Nasabah> findNasabahByIsDeletedFalse();
-    Optional<Nasabah> findNasabahByNoKtpAndIsDeletedFalse(String noKtp);
+    Optional<Nasabah> findNasabahByNikAndIsDeletedFalse(String nik);
 
-    Boolean existsByNoKtpAndIsDeletedFalse(String noKtp);
+    Boolean existsByNikAndIsDeletedFalse(String nik);
 }
