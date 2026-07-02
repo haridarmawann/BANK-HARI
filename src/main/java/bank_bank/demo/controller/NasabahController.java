@@ -2,6 +2,7 @@ package bank_bank.demo.controller;
 
 import bank_bank.demo.dto.NasabahDTO;
 import bank_bank.demo.dto.response.ApiResponse;
+import bank_bank.demo.dto.response.PaginationResponse;
 import bank_bank.demo.model.Nasabah;
 import bank_bank.demo.service.NasabahService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,15 @@ public class NasabahController {
     @GetMapping
     public ResponseEntity<ApiResponse<List<Nasabah>>> getListNasabah() {
         List<Nasabah> response = nasabahService.findAll();
+        return ResponseEntity.ok(ApiResponse.success("Nasabah berhasil Didapatkan", response));
+    }
+
+    @GetMapping("/paginated")
+    public ResponseEntity<ApiResponse<PaginationResponse<Nasabah>>> getListPaginatedNasabah(  @RequestParam(required = false) String nik,
+                                                                                              @RequestParam(required = false) String nama,
+                                                                                              @RequestParam(defaultValue = "0") int page,
+                                                                                              @RequestParam(defaultValue = "10") int size) {
+        PaginationResponse<Nasabah> response = nasabahService.PaginatedParamFiltered(nik,nama,page,size);
         return ResponseEntity.ok(ApiResponse.success("Nasabah berhasil Didapatkan", response));
     }
 

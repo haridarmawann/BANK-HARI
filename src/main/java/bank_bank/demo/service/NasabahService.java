@@ -1,9 +1,14 @@
 package bank_bank.demo.service;
 
 import bank_bank.demo.dto.NasabahDTO;
+import bank_bank.demo.dto.response.PaginationResponse;
 import bank_bank.demo.model.Nasabah;
 import bank_bank.demo.repository.NasabahRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -87,5 +92,24 @@ public class NasabahService {
                 throw new IllegalArgumentException("Nomor Handphone Harus Berupa Angka");
             }
         }
+    }
+
+
+    public PaginationResponse<Nasabah> PaginatedParamFiltered(
+            String nik,
+            String nama,
+            int page,
+            int size
+    ) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id").descending());
+        Page<Nasabah> result = nasabahRepository.filterByNikAndNama(nik, nama, pageable);
+
+        return new PaginationResponse<>(
+                result.getContent(),
+                size,
+                result.getNumberOfElements(),
+                page,
+                result.getTotalElements()
+        );
     }
 }
