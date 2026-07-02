@@ -39,7 +39,12 @@ public class NasabahService {
     }
 
     public Nasabah updateNasabah(Integer id,NasabahDTO request){
-        Nasabah nasabah = findById(id).mappingFrom(request);
+        Nasabah nasabah = findById(id);
+
+        nasabah.setBirthPlace(request.getBirthPlace() != null ? request.getBirthPlace() : nasabah.getBirthPlace());
+        nasabah.setAddress(request.getAddress() != null ? request.getAddress() : nasabah.getAddress());
+        nasabah.setBirthDate(request.getBirthDate() != null ? request.getBirthDate() : nasabah.getBirthDate());
+        nasabah.setPhone(request.getPhone() != null ? request.getPhone() : nasabah.getPhone());
         nasabah.setUpdatedAt(LocalDateTime.now());
 
         return nasabahRepository.save(nasabah);
