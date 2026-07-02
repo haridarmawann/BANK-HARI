@@ -34,18 +34,18 @@ class NasabahServiceTest {
         validRequest.setFullName("Hari Darmawan");
         validRequest.setAddress("Jakarta");
         validRequest.setBirthDate(LocalDate.of(1995, 5, 15));
-        validRequest.setNoKtp("1234567890123456");
-        validRequest.setNoTelp("081234567890");
+        validRequest.setNik("1234567890123456");
+        validRequest.setPhone("081234567890");
     }
 
     @Test
     void createNasabah_success() {
-        when(nasabahRepository.existsByNoKtpAndIsDeletedFalse(validRequest.getNoKtp()))
+        when(nasabahRepository.existsByNikAndIsDeletedFalse(validRequest.getNik()))
                 .thenReturn(false);
         when(nasabahRepository.save(any(Nasabah.class)))
                 .thenAnswer(invocation -> {
                     Nasabah saved = invocation.getArgument(0);
-                    saved.setId(1);
+                    saved.setId(1L);
                     return saved;
                 });
 
@@ -56,19 +56,19 @@ class NasabahServiceTest {
         assertEquals("Hari", result.getName());
         assertEquals("Hari Darmawan", result.getFullName());
         assertEquals("Jakarta", result.getAddress());
-        assertEquals("1234567890123456", result.getNoKtp());
-        assertEquals("081234567890", result.getNoTelp());
+        assertEquals("1234567890123456", result.getNik());
+        assertEquals("081234567890", result.getPhone());
         assertFalse(result.getDeleted());
         assertNotNull(result.getCreatedAt());
         assertNotNull(result.getUpdatedAt());
 
-        verify(nasabahRepository).existsByNoKtpAndIsDeletedFalse(validRequest.getNoKtp());
+        verify(nasabahRepository).existsByNikAndIsDeletedFalse(validRequest.getNik());
         verify(nasabahRepository).save(any(Nasabah.class));
     }
 
     @Test
     void createNasabah_duplicateNoKtp_throwsException() {
-        when(nasabahRepository.existsByNoKtpAndIsDeletedFalse(validRequest.getNoKtp()))
+        when(nasabahRepository.existsByNikAndIsDeletedFalse(validRequest.getNik()))
                 .thenReturn(true);
 
         IllegalArgumentException exception = assertThrows(
@@ -95,7 +95,7 @@ class NasabahServiceTest {
 
     @Test
     void createNasabah_nullNoKtp_throwsException() {
-        validRequest.setNoKtp(null);
+        validRequest.setNik(null);
 
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
