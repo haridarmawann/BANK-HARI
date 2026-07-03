@@ -4,6 +4,8 @@ import bank_bank.demo.dto.NasabahDTO;
 import bank_bank.demo.dto.response.PaginationResponse;
 import bank_bank.demo.model.Nasabah;
 import bank_bank.demo.repository.NasabahRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,10 +19,13 @@ import java.util.List;
 @Service
 public class NasabahService {
 
+    private static final Logger log = LoggerFactory.getLogger(NasabahService.class);
+
     @Autowired
     private NasabahRepository nasabahRepository;
 
     public Nasabah createNasabah(NasabahDTO request){
+        log.info("Creating nasabah with NIK: {}", request.getNik());
         validate(request);
         validatePhone(request.getPhone());
         Boolean checkNasabah = nasabahRepository.existsByNikAndIsDeletedFalse(request.getNik());
@@ -46,6 +51,7 @@ public class NasabahService {
 
     public Nasabah updateNasabah(Long id,NasabahDTO request){
         Nasabah nasabah = findById(id);
+        log.info("Updating nasabah with NIK: {}", nasabah.getId());
 
         validatePhone(request.getPhone());
 
@@ -64,6 +70,8 @@ public class NasabahService {
         nasabah.setUpdatedAt(LocalDateTime.now());
 
         nasabahRepository.save(nasabah);
+
+        log.info("Success deleted nasabah with Id: {}", nasabah.getId());
     }
     public Nasabah findByNoKtp(String nik){
         return nasabahRepository.findNasabahByNikAndIsDeletedFalse(nik)
