@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class NasabahDTO {
@@ -25,6 +26,14 @@ public class NasabahDTO {
     @Size(min = 10, max = 15, message = "Nomor Handphone Harus 10-15 Digit")
     @Pattern(regexp = "\\d+", message = "Nomor Handphone Harus Berupa Angka")
     private String phone;
+
+
+    @NotBlank(message = "No Rekening Harus Diisi")
+    @Size(min = 10, max = 10, message = "No Rekening Harus 10 Karakter")
+    @Pattern(regexp = "\\d+", message = "No Rekening Harus Berupa Angka")
+    private String accountNumber;
+
+    private BigDecimal balance;
 
     public String getName() {
         return name;
@@ -80,5 +89,21 @@ public class NasabahDTO {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
     }
 }

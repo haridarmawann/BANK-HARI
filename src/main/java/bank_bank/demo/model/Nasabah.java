@@ -28,6 +28,7 @@ public class Nasabah {
     private String nik;
     @Column(length = 15)
     private String phone;
+    @Column(unique = true, length = 10)
     private String accountNumber;
     private BigDecimal balance;
     private Boolean isDeleted;
@@ -149,6 +150,8 @@ public class Nasabah {
         this.setNik(request.getNik() != null ? request.getNik() : this.getNik());
         this.setPhone(request.getPhone() != null ? request.getPhone() : this.getPhone());
         this.setDeleted(false);
+        this.setAccountNumber(request.getAccountNumber() != null ? request.getAccountNumber() : this.getAccountNumber());
+        this.setBalance(request.getBalance() != null ? request.getBalance() : this.getBalance());
 
         return this;
     }
