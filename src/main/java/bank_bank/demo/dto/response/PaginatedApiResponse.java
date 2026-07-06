@@ -7,16 +7,16 @@ public class PaginatedApiResponse<T> {
     private String message;
     private List<T> data;
     private int size;
-    private int per_size;
+    private int perSize;
     private int page;
     private long total;
 
-    public PaginatedApiResponse(boolean success, String message, List<T> data, int size, int per_size, int page, long total) {
+    public PaginatedApiResponse(boolean success, String message, List<T> data, int size, int perSize, int page, long total) {
         this.success = success;
         this.message = message;
         this.data = data;
         this.size = size;
-        this.per_size = per_size;
+        this.perSize = perSize;
         this.page = page;
         this.total = total;
     }
@@ -53,12 +53,12 @@ public class PaginatedApiResponse<T> {
         this.size = size;
     }
 
-    public int getPer_size() {
-        return per_size;
+    public int getPerSize() {
+        return perSize;
     }
 
-    public void setPer_size(int per_size) {
-        this.per_size = per_size;
+    public void setPerSize(int perSize) {
+        this.perSize = perSize;
     }
 
     public int getPage() {
@@ -78,7 +78,7 @@ public class PaginatedApiResponse<T> {
     }
 
     public static <T> PaginatedApiResponse<T> success(String message,PaginationResponse<T> paginationResponse) {
-        return new PaginatedApiResponse<>(true, message, paginationResponse.getData(), paginationResponse.getSize(), paginationResponse.getPer_size(), paginationResponse.getPage(),paginationResponse.getTotal());
+        return new PaginatedApiResponse<>(true, message, paginationResponse.getData(), paginationResponse.getSize(), paginationResponse.getPerSize(), paginationResponse.getPage(),paginationResponse.getTotal());
     }
 
     public static <T> PaginatedApiResponse<T> error(String message) {

@@ -5,14 +5,14 @@ import java.util.List;
 public class PaginationResponse<T> {
     private List<T> data;
     private int size;
-    private int per_size;
+    private int perSize;
     private int page;
     private long total;
 
-    public PaginationResponse(List<T> data, int size, int per_size, int page, long total) {
+    public PaginationResponse(List<T> data, int size, int perSize, int page, long total) {
         this.data = data;
         this.size = size;
-        this.per_size = per_size;
+        this.perSize = perSize;
         this.page = page;
         this.total = total;
     }
@@ -33,12 +33,12 @@ public class PaginationResponse<T> {
         this.size = size;
     }
 
-    public int getPer_size() {
-        return per_size;
+    public int getPerSize() {
+        return perSize;
     }
 
-    public void setPer_size(int per_size) {
-        this.per_size = per_size;
+    public void setPerSize(int perSize) {
+        this.perSize = perSize;
     }
 
     public int getPage() {
