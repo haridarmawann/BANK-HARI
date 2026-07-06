@@ -1,10 +1,12 @@
 package bank_bank.demo.controller;
 
-import bank_bank.demo.dto.NasabahDTO;
+import bank_bank.demo.dto.request.NasabahDTO;
+import bank_bank.demo.dto.request.UpdateNasabahDTO;
 import bank_bank.demo.dto.response.ApiResponse;
 import bank_bank.demo.dto.response.PaginationResponse;
 import bank_bank.demo.model.Nasabah;
 import bank_bank.demo.service.NasabahService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +21,7 @@ public class NasabahController {
     private NasabahService nasabahService;
 
     @PostMapping
-    public ResponseEntity<ApiResponse<Nasabah>> createNasabah(@RequestBody NasabahDTO request) {
+    public ResponseEntity<ApiResponse<Nasabah>> createNasabah(@Valid @RequestBody NasabahDTO request) {
         Nasabah response = nasabahService.createNasabah(request);
         return ResponseEntity.ok(ApiResponse.success("Nasabah berhasil dibuat", response));
     }
@@ -51,7 +53,7 @@ public class NasabahController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<Nasabah>> updateNasabah(@PathVariable Long id, @RequestBody NasabahDTO request) {
+    public ResponseEntity<ApiResponse<Nasabah>> updateNasabah(@PathVariable Long id, @Valid @RequestBody UpdateNasabahDTO request) {
         Nasabah response = nasabahService.updateNasabah(id,request);
         return ResponseEntity.ok(ApiResponse.success("Nasabah berhasil Diubah", response));
     }

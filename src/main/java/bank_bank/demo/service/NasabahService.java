@@ -1,6 +1,7 @@
 package bank_bank.demo.service;
 
-import bank_bank.demo.dto.NasabahDTO;
+import bank_bank.demo.dto.request.NasabahDTO;
+import bank_bank.demo.dto.request.UpdateNasabahDTO;
 import bank_bank.demo.dto.response.PaginationResponse;
 import bank_bank.demo.model.Nasabah;
 import bank_bank.demo.repository.NasabahRepository;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -26,8 +28,6 @@ public class NasabahService {
 
     public Nasabah createNasabah(NasabahDTO request){
         log.info("Creating nasabah with NIK: {}", request.getNik());
-        validate(request);
-        validatePhone(request.getPhone());
         Boolean checkNasabah = nasabahRepository.existsByNikAndIsDeletedFalse(request.getNik());
         if (checkNasabah == true){
             throw new IllegalArgumentException("Data Nasabah Sudah Ada No KTP: " + request.getNik());
@@ -45,15 +45,18 @@ public class NasabahService {
                 .orElseThrow(() -> new IllegalArgumentException("Nasabah tidak ditemukan"));
     }
 
+    public Nasabah findByAccountNumber(String accountNumber){
+        return nasabahRepository.findByAccountNumber(accountNumber)
+                .orElseThrow(() -> new IllegalArgumentException("Nasabah tidak ditemukan"));
+    }
+
     public List<Nasabah> findAll(){
         return nasabahRepository.findNasabahByIsDeletedFalse();
     }
 
-    public Nasabah updateNasabah(Long id,NasabahDTO request){
+    public Nasabah updateNasabah(Long id, UpdateNasabahDTO request){
         Nasabah nasabah = findById(id);
         log.info("Updating nasabah with NIK: {}", nasabah.getId());
-
-        validatePhone(request.getPhone());
 
         nasabah.setBirthPlace(request.getBirthPlace() != null ? request.getBirthPlace() : nasabah.getBirthPlace());
         nasabah.setAddress(request.getAddress() != null ? request.getAddress() : nasabah.getAddress());
@@ -78,30 +81,6 @@ public class NasabahService {
                 .orElseThrow(() -> new IllegalArgumentException("Nasabah tidak ditemukan"));
     }
 
-    private void validate(NasabahDTO request){
-        if (request.getFullName() == null){
-            throw new IllegalArgumentException("Nama Harus Diisi");
-        }
-        if (request.getNik() == null){
-            throw new IllegalArgumentException("No KTP Harus Diisi");
-        }
-        if (request.getNik().length() != 16){
-            throw new IllegalArgumentException("No KTP Harus 16 Karakter");
-        }
-    }
-
-
-    private void validatePhone(String phone){
-        if (phone != null) {
-            if (phone.length() < 10 || phone.length() > 15) {
-                throw new IllegalArgumentException("Nomor Handphone Harus 10-15 Digit");
-            }
-            if (!phone.matches("\\d+")) {
-                throw new IllegalArgumentException("Nomor Handphone Harus Berupa Angka");
-            }
-        }
-    }
-
 
     public PaginationResponse<Nasabah> PaginatedParamFiltered(
             String nik,
@@ -119,5 +98,9 @@ public class NasabahService {
                 page,
                 result.getTotalElements()
         );
+    }
+
+    public void isiSaldo(String accountNumber, BigDecimal saldo){
+
     }
 }

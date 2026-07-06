@@ -1,6 +1,6 @@
 package bank_bank.demo.service;
 
-import bank_bank.demo.dto.NasabahDTO;
+import bank_bank.demo.dto.request.NasabahDTO;
 import bank_bank.demo.model.Nasabah;
 import bank_bank.demo.repository.NasabahRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -80,68 +80,4 @@ class NasabahServiceTest {
         verify(nasabahRepository, never()).save(any());
     }
 
-    @Test
-    void createNasabah_nullFullName_throwsException() {
-        validRequest.setFullName(null);
-
-        IllegalArgumentException exception = assertThrows(
-                IllegalArgumentException.class,
-                () -> nasabahService.createNasabah(validRequest)
-        );
-
-        assertEquals("Nama Harus Diisi", exception.getMessage());
-        verify(nasabahRepository, never()).save(any());
-    }
-
-    @Test
-    void createNasabah_nullNoKtp_throwsException() {
-        validRequest.setNik(null);
-
-        IllegalArgumentException exception = assertThrows(
-                IllegalArgumentException.class,
-                () -> nasabahService.createNasabah(validRequest)
-        );
-
-        assertEquals("No KTP Harus Diisi", exception.getMessage());
-        verify(nasabahRepository, never()).save(any());
-    }
-
-    @Test
-    void createNasabah_phoneTooShort_throwsException() {
-        validRequest.setPhone("08123");
-
-        IllegalArgumentException exception = assertThrows(
-                IllegalArgumentException.class,
-                () -> nasabahService.createNasabah(validRequest)
-        );
-
-        assertEquals("Nomor Handphone Harus 10-15 Digit", exception.getMessage());
-        verify(nasabahRepository, never()).save(any());
-    }
-
-    @Test
-    void createNasabah_phoneTooLong_throwsException() {
-        validRequest.setPhone("0812345678901234");
-
-        IllegalArgumentException exception = assertThrows(
-                IllegalArgumentException.class,
-                () -> nasabahService.createNasabah(validRequest)
-        );
-
-        assertEquals("Nomor Handphone Harus 10-15 Digit", exception.getMessage());
-        verify(nasabahRepository, never()).save(any());
-    }
-
-    @Test
-    void createNasabah_phoneNotNumeric_throwsException() {
-        validRequest.setPhone("08123abcdef");
-
-        IllegalArgumentException exception = assertThrows(
-                IllegalArgumentException.class,
-                () -> nasabahService.createNasabah(validRequest)
-        );
-
-        assertEquals("Nomor Handphone Harus Berupa Angka", exception.getMessage());
-        verify(nasabahRepository, never()).save(any());
-    }
 }

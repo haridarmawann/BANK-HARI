@@ -1,11 +1,12 @@
 package bank_bank.demo.model;
 
 
-import bank_bank.demo.dto.NasabahDTO;
+import bank_bank.demo.dto.request.NasabahDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -27,6 +28,8 @@ public class Nasabah {
     private String nik;
     @Column(length = 15)
     private String phone;
+    private String accountNumber;
+    private BigDecimal balance;
     private Boolean isDeleted;
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
@@ -95,6 +98,22 @@ public class Nasabah {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
     }
 
     public Boolean getDeleted() {

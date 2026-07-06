@@ -1,15 +1,29 @@
-package bank_bank.demo.dto;
+package bank_bank.demo.dto.request;
 
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 
 public class NasabahDTO {
     private String name;
+
+    @NotBlank(message = "Nama Harus Diisi")
     private String fullName;
+
     private String address;
     private LocalDate birthDate;
     private String birthPlace;
+
+    @NotBlank(message = "No KTP Harus Diisi")
+    @Size(min = 16, max = 16, message = "No KTP Harus 16 Karakter")
+    @Pattern(regexp = "\\d+", message = "No KTP Harus Berupa Angka")
     private String nik;
+
+    @Size(min = 10, max = 15, message = "Nomor Handphone Harus 10-15 Digit")
+    @Pattern(regexp = "\\d+", message = "Nomor Handphone Harus Berupa Angka")
     private String phone;
 
     public String getName() {

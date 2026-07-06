@@ -15,6 +15,7 @@ public interface NasabahRepository extends JpaRepository<Nasabah,Long> {
 
     List<Nasabah> findNasabahByIsDeletedFalse();
     Optional<Nasabah> findNasabahByNikAndIsDeletedFalse(String nik);
+    Optional<Nasabah> findByAccountNumber(String accountNumber);
 
     Boolean existsByNikAndIsDeletedFalse(String nik);
 
