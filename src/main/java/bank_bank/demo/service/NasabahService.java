@@ -31,6 +31,10 @@ public class NasabahService {
         if (checkNasabah == true){
             throw new IllegalArgumentException("Data Nasabah Sudah Ada No KTP: " + request.getNik());
         }
+        Boolean checkNoRekNasabah = nasabahRepository.existsByAccountNumberAndIsDeletedFalse(request.getAccountNumber());
+        if (checkNoRekNasabah == true){
+            throw new IllegalArgumentException("Data Nasabah Sudah Ada No Rekening: " + request.getAccountNumber());
+        }
         Nasabah nasabah = new Nasabah().mappingFrom(request);
         nasabah.setDeleted(false);
         nasabah.setCreatedAt(LocalDateTime.now());

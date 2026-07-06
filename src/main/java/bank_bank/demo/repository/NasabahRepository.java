@@ -18,6 +18,7 @@ public interface NasabahRepository extends JpaRepository<Nasabah,Long> {
     Optional<Nasabah> findByAccountNumber(String accountNumber);
 
     Boolean existsByNikAndIsDeletedFalse(String nik);
+    Boolean existsByAccountNumberAndIsDeletedFalse(String accountNumber);
 
 
     @Query("""

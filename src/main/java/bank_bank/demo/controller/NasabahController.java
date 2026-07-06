@@ -3,6 +3,7 @@ package bank_bank.demo.controller;
 import bank_bank.demo.dto.request.NasabahDTO;
 import bank_bank.demo.dto.request.UpdateNasabahDTO;
 import bank_bank.demo.dto.response.ApiResponse;
+import bank_bank.demo.dto.response.PaginatedApiResponse;
 import bank_bank.demo.dto.response.PaginationResponse;
 import bank_bank.demo.model.Nasabah;
 import bank_bank.demo.service.NasabahService;
@@ -33,12 +34,12 @@ public class NasabahController {
     }
 
     @GetMapping("/paginated")
-    public ResponseEntity<ApiResponse<PaginationResponse<Nasabah>>> getListPaginatedNasabah(  @RequestParam(required = false) String nik,
-                                                                                              @RequestParam(required = false) String nama,
-                                                                                              @RequestParam(defaultValue = "0") int page,
-                                                                                              @RequestParam(defaultValue = "10") int size) {
+    public ResponseEntity<PaginatedApiResponse<Nasabah>> getListPaginatedNasabah(@RequestParam(required = false) String nik,
+                                                                                                     @RequestParam(required = false) String nama,
+                                                                                                     @RequestParam(defaultValue = "0") int page,
+                                                                                                     @RequestParam(defaultValue = "10") int size) {
         PaginationResponse<Nasabah> response = nasabahService.PaginatedParamFiltered(nik,nama,page,size);
-        return ResponseEntity.ok(ApiResponse.success("Nasabah berhasil Didapatkan", response));
+        return ResponseEntity.ok(PaginatedApiResponse.success("Nasabah berhasil Didapatkan", response));
     }
 
     @GetMapping("/{id}")
