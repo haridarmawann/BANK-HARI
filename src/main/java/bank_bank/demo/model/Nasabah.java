@@ -16,8 +16,6 @@ public class Nasabah {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(length = 50)
-    private String name;
     @Column(length = 100)
     private String fullName;
     private String address;
@@ -43,14 +41,6 @@ public class Nasabah {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getFullName() {
@@ -142,7 +132,6 @@ public class Nasabah {
     }
 
     public Nasabah mappingFrom(NasabahDTO request){
-        this.setName(request.getName() != null ? request.getName() : this.getName());
         this.setFullName(request.getFullName() != null ? request.getFullName() : this.getFullName());
         this.setAddress(request.getAddress() != null ? request.getAddress() : this.getAddress());
         this.setBirthDate(request.getBirthDate() != null ? request.getBirthDate() : this.getBirthDate());

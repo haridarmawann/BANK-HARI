@@ -3,6 +3,7 @@ package bank_bank.demo.service;
 import bank_bank.demo.dto.request.NasabahDTO;
 import bank_bank.demo.model.Nasabah;
 import bank_bank.demo.repository.NasabahRepository;
+import bank_bank.demo.service.impl.NasabahServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,14 +24,13 @@ class NasabahServiceTest {
     private NasabahRepository nasabahRepository;
 
     @InjectMocks
-    private NasabahService nasabahService;
+    private NasabahServiceImpl nasabahService;
 
     private NasabahDTO validRequest;
 
     @BeforeEach
     void setUp() {
         validRequest = new NasabahDTO();
-        validRequest.setName("Hari");
         validRequest.setFullName("Hari Darmawan");
         validRequest.setAddress("Jakarta");
         validRequest.setBirthDate(LocalDate.of(1995, 5, 15));
@@ -53,7 +53,6 @@ class NasabahServiceTest {
 
         assertNotNull(result);
         assertEquals(1, result.getId());
-        assertEquals("Hari", result.getName());
         assertEquals("Hari Darmawan", result.getFullName());
         assertEquals("Jakarta", result.getAddress());
         assertEquals("1234567890123456", result.getNik());

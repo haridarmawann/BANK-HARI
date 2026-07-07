@@ -9,7 +9,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class NasabahDTO {
-    private String name;
 
     @NotBlank(message = "Nama Harus Diisi")
     private String fullName;
@@ -34,14 +33,6 @@ public class NasabahDTO {
     private String accountNumber;
 
     private BigDecimal balance;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getFullName() {
         return fullName;
