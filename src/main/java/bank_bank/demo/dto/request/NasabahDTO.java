@@ -32,7 +32,7 @@ public class NasabahDTO {
     @Pattern(regexp = "\\d+", message = "No Rekening Harus Berupa Angka")
     private String accountNumber;
 
-    private BigDecimal balance;
+    private BigDecimal balance = BigDecimal.ZERO    ;
 
     public String getFullName() {
         return fullName;

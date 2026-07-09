@@ -3,6 +3,7 @@ package bank_bank.demo.service.impl;
 import bank_bank.demo.dto.request.NasabahDTO;
 import bank_bank.demo.dto.request.UpdateNasabahDTO;
 import bank_bank.demo.dto.response.PaginationResponse;
+import bank_bank.demo.exception.NotFoundException;
 import bank_bank.demo.model.Nasabah;
 import bank_bank.demo.repository.NasabahRepository;
 import bank_bank.demo.service.NasabahService;
@@ -44,13 +45,13 @@ public class NasabahServiceImpl implements NasabahService {
     }
 
     public Nasabah findById(Long id){
-        return nasabahRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Nasabah tidak ditemukan"));
+        return nasabahRepository.findByIdAndIsDeletedFalse(id)
+                .orElseThrow(() -> new NotFoundException("Nasabah tidak ditemukan"));
     }
 
     public Nasabah findByAccountNumber(String accountNumber){
-        return nasabahRepository.findByAccountNumber(accountNumber)
-                .orElseThrow(() -> new IllegalArgumentException("Nasabah tidak ditemukan"));
+        return nasabahRepository.findByAccountNumberAndIsDeletedFalse(accountNumber)
+                .orElseThrow(() -> new NotFoundException("Nasabah tidak ditemukan"));
     }
 
     public List<Nasabah> findAll(){
@@ -81,7 +82,7 @@ public class NasabahServiceImpl implements NasabahService {
     }
     public Nasabah findByNoKtp(String nik){
         return nasabahRepository.findNasabahByNikAndIsDeletedFalse(nik)
-                .orElseThrow(() -> new IllegalArgumentException("Nasabah tidak ditemukan"));
+                .orElseThrow(() -> new NotFoundException("Nasabah tidak ditemukan"));
     }
 
 

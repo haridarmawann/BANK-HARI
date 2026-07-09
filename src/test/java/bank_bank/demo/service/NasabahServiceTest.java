@@ -36,6 +36,7 @@ class NasabahServiceTest {
         validRequest.setBirthDate(LocalDate.of(1995, 5, 15));
         validRequest.setNik("1234567890123456");
         validRequest.setPhone("081234567890");
+        validRequest.setAccountNumber("1234567890");
     }
 
     @Test
@@ -76,6 +77,22 @@ class NasabahServiceTest {
         );
 
         assertEquals("Data Nasabah Sudah Ada No KTP: 1234567890123456", exception.getMessage());
+        verify(nasabahRepository, never()).save(any());
+    }
+
+    @Test
+    void createNasabah_duplicateAccountNumber_throwsException() {
+        when(nasabahRepository.existsByNikAndIsDeletedFalse(validRequest.getNik()))
+                .thenReturn(false);
+        when(nasabahRepository.existsByAccountNumberAndIsDeletedFalse(validRequest.getAccountNumber()))
+                .thenReturn(true);
+
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> nasabahService.createNasabah(validRequest)
+        );
+
+        assertEquals("Data Nasabah Sudah Ada No Rekening: 1234567890", exception.getMessage());
         verify(nasabahRepository, never()).save(any());
     }
 

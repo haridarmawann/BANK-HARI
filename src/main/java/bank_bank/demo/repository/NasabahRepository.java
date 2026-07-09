@@ -14,17 +14,20 @@ import java.util.Optional;
 public interface NasabahRepository extends JpaRepository<Nasabah,Long> {
 
     List<Nasabah> findNasabahByIsDeletedFalse();
+
     Optional<Nasabah> findNasabahByNikAndIsDeletedFalse(String nik);
-    Optional<Nasabah> findByAccountNumber(String accountNumber);
+    Optional<Nasabah> findByAccountNumberAndIsDeletedFalse(String accountNumber);
+    Optional<Nasabah> findByIdAndIsDeletedFalse(Long id);
 
     Boolean existsByNikAndIsDeletedFalse(String nik);
     Boolean existsByAccountNumberAndIsDeletedFalse(String accountNumber);
 
 
     @Query("""
-    SELECT n FROM Nasabah n\s
-    WHERE (:nik IS NULL OR UPPER(n.nik) LIKE UPPER(CONCAT('%', :nik, '%')))
-    AND (:nama IS NULL OR UPPER(n.fullName) LIKE UPPER(CONCAT('%', :nama, '%')))
-   \s""")
+     SELECT n FROM Nasabah n\s
+     WHERE (:nik IS NULL OR UPPER(n.nik) LIKE UPPER(CONCAT('%', :nik, '%')))
+     AND (:nama IS NULL OR UPPER(n.fullName) LIKE UPPER(CONCAT('%', :nama, '%')))
+     AND n.isDeleted = false\s
+     """)
     Page<Nasabah> filterByNikAndNama(@Param("nik") String nik, @Param("nama") String nama, Pageable pageable);
 }

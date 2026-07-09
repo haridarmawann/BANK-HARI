@@ -28,7 +28,7 @@ public class Nasabah {
     private String phone;
     @Column(unique = true, length = 10)
     private String accountNumber;
-    private BigDecimal balance;
+    private BigDecimal balance = BigDecimal.ZERO;
     private Boolean isDeleted;
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
